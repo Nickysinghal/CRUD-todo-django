@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.shortcuts import redirect
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', lambda request: redirect('todo_list')),  # 👈 this redirects / to todo_list
     path('todo/',include('todo.urls')),
-    path('slib/',include('slib.urls')),
     
 ]

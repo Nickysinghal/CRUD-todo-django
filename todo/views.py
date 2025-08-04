@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render,redirect
 from .models import Todo
 # Create your views here.
 def todo_list(request):
@@ -25,3 +26,18 @@ def delete_todo(request,todo_id):
     todo = Todo.objects.get(id=todo_id)
     todo.delete()                             
     return redirect('todo_list')
+
+def update_todo(request,todo_id):
+    t = get_object_or_404(Todo,id=todo_id)
+    if request.method=='POST':
+        data = request.POST
+        title = data.get('title')
+        description = data.get('description')
+        
+        t.title = title
+        t.description= description
+        t.save()
+        return redirect('/')
+    context = { 'todo' : t}
+    return render(request, 'todo/update.html', context)
+    # return HttpResponse("update page")

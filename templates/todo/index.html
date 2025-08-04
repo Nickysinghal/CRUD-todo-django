@@ -58,9 +58,11 @@
               {% if todo.completed %}
               <span class="badge bg-success">completed</span>
               {% else %}
-              <a class="btn btn-sm btn-dark" href="{% url 'complete_todo' todo.id %}">Complete</a>
+              <a class="btn btn-sm btn-dark" href="{% url 'complete_todo' todo.id %}">Mark as Completed</a>
+              <a class="btn btn-sm btn-success" href="{% url 'update_todo' todo.id %}">Update</a>
               {% endif %}  
               <a class="btn btn-sm btn-danger" href="{% url 'delete_todo' todo.id %}">Delete</a>
+             
             </td>
           </tr>
           {% endfor %}
