@@ -1,109 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-   .bg-yellow-200 {
-   background-color: #fff3cd !important;
-   }
-     </style>
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
- 
-  </head>
-  <body style="background-color: rgb(81, 130, 255);">
-    <h1 class="text-center" style="background-color: rgb(83, 27, 238); color:white">To-Do List</h1>
-    <div class="container">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    .bg-yellow-200 {
+      background-color: #fff3cd !important;
+    }
+  </style>
 
-      <div class="row justify-content-center">
-        <div class="col-sm-7">
-          <form action= "{% url 'create_todo' %}" method="POST">
-            {% csrf_token %}
-            <div class="mb-3 mt-3">
-              <label for="title" style="background-color: rgb(25, 78, 253);">Title</label>
-              <input
-                type="text"
-                class="form-control"
-                id="title"
-                placeholder="Enter title"
-                name="title"
-              />
+</head>
+
+<body style="background-color: rgb(198, 230, 248);">
+  <h1 class="text-center" style="background-color: rgb(83, 27, 238); color:white">To-Do List</h1>
+  <div class="container">
+
+    <div class="row justify-content-center">
+      <div class="col-sm-7">
+        <form action="{% url 'create_todo' %}" method="POST">
+          {% csrf_token %}
+          <div class="mb-3 mt-3">
+            <h4><label for="title">Title</label></h4>
+            <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" />
+          </div>
+          <div class="mb-3">
+            <h4><label for="description">Description</label></h4>
+            <textarea class="form-control" name="description"> </textarea>
+          </div>
+
+          <div class="mb-3">
+            <h4><label for="email">Email</label></h4>
+            <input type="email" class="form-control" id="email" placeholder="Enter email id" name="email" required />
+          </div>
+
+          <div class="mb-3">
+            <h4><label for="phone">Phone</label></h4>
+            <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" name="phone"
+              maxlength="10" pattern="\d{10}" />
+          </div>
+          <div>
+            <div>
+              <h4><label>Select Priority (by deafult it is medium)</label></h4>
             </div>
-            <div class="mb-3">
-              <label for="description" style="background-color: rgb(25, 78, 253);">Description</label>
-              <textarea class="form-control" name="description"> </textarea>
-            </div>
+            <input type="radio" name="priority" value="H"> <label>High</label>
+            <input type="radio" name="priority" value="M"> <label>Medium</label>
+            <input type="radio" name="priority" value="L"> <label>Low</label>
+          </div>
 
-            <div class="mb-3">
-              <label for="email" style="background-color: rgb(25, 78, 253);">Email</label>
-                <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="Enter email id"
-                name="email" required
-              />
-            </div>
-
-            <div class="mb-3">
-              <label for="phone" style="background-color: rgb(25, 78, 253);">Phone</label>
-                <input
-                type="tel"
-                class="form-control"
-                id="phone"
-                placeholder="Enter phone number"
-                name="phone"
-                maxlength="10" pattern="\d{10}"
-              />
-            </div>
-
-            <button type="submit" class="btn btn-dark my-2">Add</button>
-          </form>
-        </div>
+          <button type="submit" class="btn btn-primary my-2 mb-4">Add</button>
+        </form>
       </div>
-
-      <table class="table text-white">
-        <thead>
-          <tr>
-            <th style="background-color: rgb(237, 156, 43);">Sno.</th>
-            <th style="background-color: rgb(237, 156, 43);">Title</th>
-            <th style="background-color: rgb(237, 156, 43);">Description</th>
-            <th style="background-color: rgb(237, 156, 43);">Email</th>
-            <th style="background-color: rgb(237, 156, 43);">Phone</th>
-            <th style="background-color: rgb(237, 156, 43);">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for todo in todos %}
-          <tr >
-            <td class="bg-yellow-200">{{ forloop.counter }}</td>
-            <td class="bg-yellow-200">{{ todo.title }}</td>
-            <td class="bg-yellow-200">{{ todo.description }}</td>
-            <td class="bg-yellow-200">{{ todo.email }}</td>
-            <td class="bg-yellow-200">{{ todo.phone }}</td>
-            <td class="bg-yellow-200"> 
-              
-              {% if todo.completed %}
-              <span class="badge bg-success">completed</span>
-              {% else %}
-              <a class="btn btn-sm btn-dark" href="{% url 'complete_todo' todo.id %}">Mark as Completed</a>
-              <a class="btn btn-sm btn-success" href="{% url 'update_todo' todo.id %}">Update</a>
-              {% endif %}  
-              <a class="btn btn-sm btn-danger" href="{% url 'delete_todo' todo.id %}">Delete</a>
-             
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>      
     </div>
+    <!-- Table for displaying data -->
+    <table class="table text-white">
+      <thead>
+        <tr>
+          <th style="background-color: rgb(237, 156, 43);">Sno.</th>
+          <th style="background-color: rgb(237, 156, 43);">Title</th>
+          <th style="background-color: rgb(237, 156, 43);">Description</th>
+          <th style="background-color: rgb(237, 156, 43);">Email</th>
+          <th style="background-color: rgb(237, 156, 43);">Phone</th>
+          <th style="background-color: rgb(237, 156, 43);">Priority</th>
+          <th style="background-color: rgb(237, 156, 43);">Action</th>
 
-  </body>
+        </tr>
+      </thead>
+      <tbody>
+        {% for todo in todos %}
+        <tr>
+          <td class="bg-yellow-200">{{ forloop.counter }}</td>
+          <td class="bg-yellow-200">{{ todo.title }}</td>
+          <td class="bg-yellow-200">{{ todo.description }}</td>
+          <td class="bg-yellow-200">{{ todo.email }}</td>
+          <td class="bg-yellow-200">{{ todo.phone }}</td>
+
+          <td class="bg-yellow-200">
+            {%if todo.priority == 'H'%}
+            <h5><span class="badge bg-light text-dark">High</span></h5>
+            {%elif todo.priority == 'M'%}
+            <h5><span class="badge bg-light text-dark">Medium</span></h5>
+            {%elif todo.priority == 'L'%}
+            <h5><span class="badge bg-light text-dark">Low</span></h5>
+            {%endif%}
+          </td>
+
+          <td class="bg-yellow-200">
+
+            {% if todo.completed %}
+            <span class="badge bg-success">completed</span>
+            {% else %}
+            <a class="btn btn-sm btn-dark" href="{% url 'complete_todo' todo.id %}">Mark as Completed</a>
+            <a class="btn btn-sm btn-success" href="{% url 'update_todo' todo.id %}">Update</a>
+            {% endif %}
+            <a class="btn btn-sm btn-danger" href="{% url 'delete_todo' todo.id %}">Delete</a>
+
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
 </html>
