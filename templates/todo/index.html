@@ -41,6 +41,29 @@
               <textarea class="form-control" name="description"> </textarea>
             </div>
 
+            <div class="mb-3">
+              <label for="email" style="background-color: rgb(25, 78, 253);">Email</label>
+                <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Enter email id"
+                name="email" required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" style="background-color: rgb(25, 78, 253);">Phone</label>
+                <input
+                type="tel"
+                class="form-control"
+                id="phone"
+                placeholder="Enter phone number"
+                name="phone"
+                maxlength="10" pattern="\d{10}"
+              />
+            </div>
+
             <button type="submit" class="btn btn-dark my-2">Add</button>
           </form>
         </div>
@@ -52,6 +75,8 @@
             <th style="background-color: rgb(237, 156, 43);">Sno.</th>
             <th style="background-color: rgb(237, 156, 43);">Title</th>
             <th style="background-color: rgb(237, 156, 43);">Description</th>
+            <th style="background-color: rgb(237, 156, 43);">Email</th>
+            <th style="background-color: rgb(237, 156, 43);">Phone</th>
             <th style="background-color: rgb(237, 156, 43);">Action</th>
           </tr>
         </thead>
@@ -61,6 +86,8 @@
             <td class="bg-yellow-200">{{ forloop.counter }}</td>
             <td class="bg-yellow-200">{{ todo.title }}</td>
             <td class="bg-yellow-200">{{ todo.description }}</td>
+            <td class="bg-yellow-200">{{ todo.email }}</td>
+            <td class="bg-yellow-200">{{ todo.phone }}</td>
             <td class="bg-yellow-200"> 
               
               {% if todo.completed %}

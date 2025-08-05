@@ -38,6 +38,32 @@
               <textarea class="form-control" name="description">{{todo.description}} </textarea>
             </div>
 
+            <div class="mb-3">
+              <label for="email" style="background-color: rgb(25, 78, 253);">Updated Email</label>
+                <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Enter email id"
+                name="email"
+                value="{{todo.email}}"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" style="background-color: rgb(25, 78, 253); color:white; font-weight:300;">Updated Phone</label>
+                <input
+                type="tel"
+                class="form-control"
+                id="phone"
+                placeholder="Enter phone number"
+                name="phone"
+                value="{{todo.phone}}"
+                maxlength="10" pattern="\d{10}"
+              />
+            </div>
+
             <button type="submit" class="btn btn-dark">Update</button>
           </form>
         </div>
