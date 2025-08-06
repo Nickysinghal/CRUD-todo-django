@@ -69,24 +69,24 @@
               required
             />
           </div>
-          <div class="my-2">
+          <div class="d-flex justify-content-between my-2">
             <div>
-              <label class="fs-5 fw-semibold ps-1">Select Priority (by default it is medium)</label>
+              <label class="fs-5 fw-semibold ps-1">Select Priority</label>
             </div>
 
-            <div class="d-flex justify-content-between ps-1">
+            {% comment %} <div class="d-flex justify-content-between ps-1"> {% endcomment %}
               <div><input type="radio" name="priority" value='H' {% if todo.priority == 'H' %}checked{% endif %}><label>High</label></div>
               <div><input type="radio" name="priority" value='M'{% if todo.priority == 'M' %}checked{% endif %}><label>Medium</label></div>
               <div><input type="radio" name="priority" value='L'{% if todo.priority == 'L' %}checked{% endif %}><label>Low</label></div>
-            </div>
+            {% comment %} </div> {% endcomment %}
           </div>
 
-          <div>
+          <div class="d-flex justify-content-between">
             <div>
               <label class="fs-5 fw-semibold ps-1">Select Check box</label>
             </div>
 
-            <div class="d-flex justify-content-between ps-1">
+            {% comment %} <div class="d-flex justify-content-between ps-1"> {% endcomment %}
               <div>
               <input type="checkbox" name="lang" value="P"{%if 'P' in todo.languages%}checked{%endif%}> 
               <label>Pyhton</label></div>
@@ -99,10 +99,26 @@
               <div>
               <input type="checkbox" name="lang" value="N" {%if 'N' in todo.languages%}checked{%endif%}> 
               <label>None</label></div>
+            {% comment %} </div> {% endcomment %}
+          </div>
+
+
+          <div class="d-flex align-item-center">
+            <div><label class="fs-5 fw-semibold ps-1">Difficulty level</label></div>
+            <div class="ms-5 pt-1"><input type="range" min="0" max="5" name="difficulty" value="{{ todo.difficulty|default:1 }}" oninput="difficultyValue.value = difficulty.value">
+            <output id="difficultyValue">{{ todo.difficulty|default:1 }}</output>
             </div>
           </div>
+
+          
+          <div class="d-flex align-item-center pb-1">
+            <div><label class="fs-5 fw-semibold ps-1 me-5" for="due_date" >Due date</label></div>
+            <div><input class="ms-5" name="due_date" type="date" value="{{ todo.due_date|date:'Y-m-d' }}"></div>
+
+          </div>
+
           <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-dark">Update</button>
+          <button type="submit" class="btn btn-primary">Update</button>
           </div>
         </form>
       </div>

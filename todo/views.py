@@ -18,7 +18,9 @@ def create_todo(request):
         phone = request.POST.get('phone')
         priority = request.POST.get('priority')
         languages = ','.join(langs)
-        Todo.objects.create(title=title,description=description, email=email, phone=phone, priority=priority, languages=languages)
+        difficulty = request.POST.get('difficulty',1)
+        due_date = request.POST.get('due_date')
+        Todo.objects.create(title=title,description=description, email=email, phone=phone, priority=priority, languages=languages, difficulty=difficulty, due_date=due_date)
     return redirect('todo_list') #this is the 'name' that we have defined in url.py 
                                 #i.e path('todo/',views.todo_list,name="todo_list")
                                 
@@ -44,6 +46,8 @@ def update_todo(request,todo_id):
         priority = data.get('priority')
         langs = data.getlist('lang')
         languages = ','.join(langs)
+        difficulty = data.get('difficulty')
+        due_date = data.get('due_date')
         
         t.title = title
         t.description= description
@@ -51,6 +55,8 @@ def update_todo(request,todo_id):
         t.phone = phone
         t.priority= priority
         t.languages= languages
+        t.difficulty= difficulty
+        t.due_date=due_date
         
         t.save()
         return redirect('/')
