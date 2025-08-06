@@ -16,6 +16,7 @@ class Todo(models.Model):
     email = models.EmailField(max_length=55,null=True, blank=True)
     phone = PhoneNumberField(null=True, blank=True)
     priority = models.CharField(max_length=1, choices=PRIORITY_CHOICES,default='M')
+    languages = models.CharField(max_length=100,null=True,blank=True)
     #when we call Todo then it returns its title
     # def __str__(self) -> str:
     #     return self.title 

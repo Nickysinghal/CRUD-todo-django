@@ -20,39 +20,59 @@
   <h1 class="text-center" style="background-color: rgb(83, 27, 238); color:white">To-Do List</h1>
   <div class="container">
 
-    <div class="row justify-content-center">
-      <div class="col-sm-7">
+    <div class="row justify-content-center my-5">
+      <div class="col-sm-7 card" style="width: 42rem;">
         <form action="{% url 'create_todo' %}" method="POST">
           {% csrf_token %}
-          <div class="mb-3 mt-3">
-            <h4><label for="title">Title</label></h4>
-            <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" />
+
+          <div class="mb-3 mt-3 d-flex justify-content-between">
+            <label class="fs-5 fw-semibold ps-1" for="title">Title</label>
+            <input type="text" class="form-control-sm w-75" id="title" placeholder="Enter title" name="title" />
           </div>
-          <div class="mb-3">
-            <h4><label for="description">Description</label></h4>
-            <textarea class="form-control" name="description"> </textarea>
+          
+          <div class="mb-3 d-flex justify-content-between">
+            <label class="fs-5 fw-semibold ps-1" for="description">Description</label>
+            <textarea class="form-control-sm w-75 border-2" name="description"> </textarea>
           </div>
 
-          <div class="mb-3">
-            <h4><label for="email">Email</label></h4>
-            <input type="email" class="form-control" id="email" placeholder="Enter email id" name="email" required />
+          <div class="mb-3 d-flex justify-content-between">
+            <label class="fs-5 fw-semibold ps-1" for="email">Email</label>
+            <input type="email" class="form-control-sm w-75" id="email" placeholder="Enter email id" name="email"
+              required />
           </div>
 
-          <div class="mb-3">
-            <h4><label for="phone">Phone</label></h4>
-            <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" name="phone"
-              maxlength="10" pattern="\d{10}" />
+          <div class="mb-3 d-flex justify-content-between">
+            <label class="fs-5 fw-semibold ps-1" for="phone">Phone</label>
+            <input type="tel" class="form-control-sm w-75" id="phone" placeholder="Enter phone number" name="phone"
+              maxlength="10" pattern="\d{10}" required />
           </div>
+
           <div>
             <div>
-              <h4><label>Select Priority (by deafult it is medium)</label></h4>
+              <label class="fs-5 fw-semibold ps-1">Select priority (default:Medium)</label>
             </div>
-            <input type="radio" name="priority" value="H"> <label>High</label>
-            <input type="radio" name="priority" value="M"> <label>Medium</label>
-            <input type="radio" name="priority" value="L"> <label>Low</label>
+            <div class="d-flex justify-content-between ps-1">
+              <div><input type="radio" name="priority" value="H"> <label>High</label></div>
+              <div><input type="radio" name="priority" value="M" checked> <label>Medium</label></div>
+              <div><input type="radio" name="priority" value="L"> <label>Low</label></div>
+            </div>
           </div>
 
-          <button type="submit" class="btn btn-primary my-2 mb-4">Add</button>
+          <div>
+            <div>
+              <label class="fs-5 fw-semibold ps-1">Select Check box</label>
+            </div>
+            <div class="d-flex justify-content-between ps-1">
+              <div><input type="checkbox" name="lang" value="P"> <label>Python</label></div>
+              <div><input type="checkbox" name="lang" value="J"> <label>Java</label></div>
+              <div><input type="checkbox" name="lang" value="C"> <label>C</label></div>
+              <div><input type="checkbox" name="lang" value="N"> <label>Other</label></div>
+
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary my-2 mb-4 ms-1">Add Task</button>
+          </div>
         </form>
       </div>
     </div>
@@ -66,13 +86,15 @@
           <th style="background-color: rgb(237, 156, 43);">Email</th>
           <th style="background-color: rgb(237, 156, 43);">Phone</th>
           <th style="background-color: rgb(237, 156, 43);">Priority</th>
+          <th style="background-color: rgb(237, 156, 43);">Language(s)</th>
           <th style="background-color: rgb(237, 156, 43);">Action</th>
+
 
         </tr>
       </thead>
       <tbody>
         {% for todo in todos %}
-        <tr>
+        <tr class="bg-yellow-200">
           <td class="bg-yellow-200">{{ forloop.counter }}</td>
           <td class="bg-yellow-200">{{ todo.title }}</td>
           <td class="bg-yellow-200">{{ todo.description }}</td>
@@ -89,17 +111,34 @@
             {%endif%}
           </td>
 
-          <td class="bg-yellow-200">
-
-            {% if todo.completed %}
-            <span class="badge bg-success">completed</span>
-            {% else %}
-            <a class="btn btn-sm btn-dark" href="{% url 'complete_todo' todo.id %}">Mark as Completed</a>
-            <a class="btn btn-sm btn-success" href="{% url 'update_todo' todo.id %}">Update</a>
-            {% endif %}
-            <a class="btn btn-sm btn-danger" href="{% url 'delete_todo' todo.id %}">Delete</a>
-
+          <td class="bg-yellow-200 d-flex flex-column align-items-center gap-1">
+            {%if 'P' in todo.languages%}
+            <h5><span class="badge bg-light text-dark">Python</span></h5>{%endif%}
+            {%if 'J' in todo.languages%}
+            <h5><span class="badge bg-light text-dark">Java</span></h5>{%endif%}
+            {%if 'C' in todo.languages %}
+            <h5><span class="badge bg-light text-dark">C</span></h5>{%endif%}
+            {%if 'N' in todo.languages %}
+            <h5><span class="badge bg-light text-dark">None</span></h5>
+            {%endif%}
           </td>
+          <td class="bg-yellow-200">
+            <div class="d-flex flex-column align-items-center gap-1 ">
+              <div>
+                {% if todo.completed %}
+                <span class="badge bg-success">Completed</span>
+                {% else %}
+                <a class="btn btn-sm btn-dark" href="{% url 'complete_todo' todo.id %}">Mark as Completed</a>
+              </div>
+
+              <div>
+                <a class="btn btn-sm btn-success" href="{% url 'update_todo' todo.id %}">Update</a>
+                {% endif %}
+                <a class="btn btn-sm btn-danger" href="{% url 'delete_todo' todo.id %}">Delete</a>
+              </div>
+            </div>
+          </td>
+
 
         </tr>
         {% endfor %}

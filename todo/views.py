@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render,redirect
 from .models import Todo
+from django.contrib import messages
 # Create your views here.
 def todo_list(request):
     todos = Todo.objects.order_by('-id')
@@ -10,12 +11,14 @@ def todo_list(request):
 
 def create_todo(request):
     if request.method == 'POST':
-        title = request.POST.get('title')
+        langs = request.POST.getlist('lang') 
+        title = request.POST.get('title')   
         description =request.POST.get('description')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         priority = request.POST.get('priority')
-        Todo.objects.create(title=title,description=description, email=email, phone=phone, priority=priority)
+        languages = ','.join(langs)
+        Todo.objects.create(title=title,description=description, email=email, phone=phone, priority=priority, languages=languages)
     return redirect('todo_list') #this is the 'name' that we have defined in url.py 
                                 #i.e path('todo/',views.todo_list,name="todo_list")
                                 
@@ -39,12 +42,15 @@ def update_todo(request,todo_id):
         email = data.get('email')
         phone= data.get('phone')
         priority = data.get('priority')
+        langs = data.getlist('lang')
+        languages = ','.join(langs)
         
         t.title = title
         t.description= description
         t.email=email
         t.phone = phone
         t.priority= priority
+        t.languages= languages
         
         t.save()
         return redirect('/')
