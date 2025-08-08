@@ -11,9 +11,9 @@ class Todo(models.Model):
     ]
     
     title = models.CharField(max_length=30)
-    description =models.TextField()
+    description =models.TextField(max_length=55,null=True, blank=True)
     completed = models.BooleanField(default=False)
-    email = models.EmailField(max_length=55,null=True, blank=True)
+    email = models.EmailField()
     phone = PhoneNumberField(null=True, blank=True)
     priority = models.CharField(max_length=1, choices=PRIORITY_CHOICES,default='M')
     languages = models.CharField(max_length=100,null=True,blank=True)  

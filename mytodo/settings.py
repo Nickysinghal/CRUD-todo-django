@@ -26,10 +26,12 @@ TEMPLATE_DIR = Path(BASE_DIR,'templates')
 SECRET_KEY = 'django-insecure-5+f0apq@w1@^vc3)-yrs+zhy(psmsi9ci8)@ua*xk)bskj&j5%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#changed manually
+# DEBUG = True
+DEBUG = False
 
 #manually added host
-ALLOWED_HOSTS = ["127.0.0.1","codewithnicky.com"]
+ALLOWED_HOSTS = ["127.0.0.1","codewithnicky.com","nickysinghal.pythonanywhere.com"]
 
 
 # Application definition
@@ -121,7 +123,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+#added manually
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
