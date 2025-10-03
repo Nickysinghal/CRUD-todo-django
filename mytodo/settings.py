@@ -31,7 +31,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-5+f0apq@w1@^vc3)-yrs+
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # Get allowed hosts from environment variable
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost,crud-mytodo-django.onrender.com,*.onrender.com').split(',')
+
+# Clean up any whitespace in allowed hosts
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()]
 
 
 # Application definition
