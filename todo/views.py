@@ -1,8 +1,19 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect
 from .models import Todo
 from django.contrib import messages
+import os
 # Create your views here.
+
+def health_check(request):
+    """Simple health check view for debugging"""
+    return JsonResponse({
+        'status': 'ok',
+        'debug': os.environ.get('DEBUG', 'Not set'),
+        'secret_key_set': 'SECRET_KEY' in os.environ,
+        'allowed_hosts': os.environ.get('ALLOWED_HOSTS', 'Not set'),
+        'host_header': request.get_host(),
+    })
 def todo_list(request):
     todos = Todo.objects.order_by('-id')
     return render(request,'todo/index.html',{'todos':todos})

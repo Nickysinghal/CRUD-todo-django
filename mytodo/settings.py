@@ -31,10 +31,18 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-5+f0apq@w1@^vc3)-yrs+
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # Get allowed hosts from environment variable
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost,crud-mytodo-django.onrender.com,*.onrender.com').split(',')
+# For debugging, let's be more permissive and add logging
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# Clean up any whitespace in allowed hosts
-ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()]
+# Temporarily allow all hosts for Render deployment debugging
+ALLOWED_HOSTS = ['*']
+
+# Log the environment variables for debugging
+logger.info(f"DEBUG setting: {DEBUG}")
+logger.info(f"SECRET_KEY exists: {'SECRET_KEY' in os.environ}")
+logger.info(f"ALLOWED_HOSTS setting: {ALLOWED_HOSTS}")
 
 
 # Application definition
@@ -87,7 +95,7 @@ WSGI_APPLICATION = 'mytodo.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
+        default=f'sqlite:///{BASE_DIR}/db.sqlite3',
         conn_max_age=600,
         ssl_require=False
     )
